@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, CardContent, Button } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { HeaderPage } from '../../components/HeaderPage/HeaderPage';
 
+type RevenueData = {
+    total_tongtien: number;
+    total_hoadon: number;
+};
 
 const RevenuePage = () => {
-    //   const [month, setMonth] = useState<Dayjs | null>(dayjs());
-    //   const [startDate, setStartDate] = useState<Dayjs | null>(null);
-    //   const [endDate, setEndDate] = useState<Dayjs | null>(null);
-
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [revenueData, setRevenueData] = useState(null);
+    const [startDate, setStartDate] = useState<Dayjs | null>(null);
+    const [endDate, setEndDate] = useState<Dayjs | null>(null);
+    const [revenueData, setRevenueData] = useState<RevenueData | null>(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSearch = async () => {
         if (!startDate || !endDate) {
@@ -39,7 +39,7 @@ const RevenuePage = () => {
             const data = await response.json();
             setRevenueData(data);
         } catch (err) {
-            setError(err.message);
+            setError((err as Error).message);
         } finally {
             setLoading(false);
         }
@@ -54,12 +54,6 @@ const RevenuePage = () => {
                     <div className="flex gap-4">
                         <DatePicker label="Từ ngày" value={startDate} onChange={(newValue) => setStartDate(newValue ? dayjs(newValue) : null)} />
                         <DatePicker label="Đến ngày" value={endDate} onChange={(newValue) => setEndDate(newValue ? dayjs(newValue) : null)} />
-                        {/* <DatePicker views={["year", "month"]} label="Chọn tháng năm" value={month}
-                    onChange={(newValue) => setMonth(newValue ? dayjs(newValue) : null)}/> */}
-
-                        {/* <DatePicker label="Từ ngày" value={startDate} onChange={(newValue) => setStartDate(newValue ? dayjs(newValue) : null)} />
-<DatePicker label="Đến ngày" value={endDate} onChange={(newValue) => setEndDate(newValue ? dayjs(newValue) : null)} /> */}
-
                         <Button variant="contained" color="primary" onClick={handleSearch} disabled={loading}>
                             {loading ? "Đang tải..." : "Tìm kiếm"}
                         </Button>
@@ -86,7 +80,6 @@ const RevenuePage = () => {
                 </div>
             </LocalizationProvider>
         </>
-
     );
 };
 
