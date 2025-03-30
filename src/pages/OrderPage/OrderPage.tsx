@@ -30,7 +30,7 @@ type OrderItem = {
 };
 export const OrderPage = () => {
   const location = useLocation();
-  const { tableId, tableName } = location.state || {};
+  const { b_id, tableName } = location.state || {};
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [categoryList, setCategorieList] = useState<Category[]>([]);
   const [FoodItem, setFoodItem] = useState<FoodItem[]>([]);
@@ -114,7 +114,7 @@ export const OrderPage = () => {
       <HeaderPage />
       <div className='container mx-auto mt-5'>
         <div className="orderZone">
-          <h2>Phiếu Order {tableName} - mã bàn: {tableId}</h2>
+          <h2>Phiếu Order {tableName} - mã bàn: {b_id}</h2>
           <table>
             <thead>
               <tr>
