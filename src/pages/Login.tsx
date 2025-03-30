@@ -53,7 +53,7 @@ const Login: React.FC = () => {
     >
       {/* Chữ "NHÀ HÀNG" bên trái */}
       <div
-        className="absolute left-25 top-0 h-full flex items-center justify-center flex-col"
+        className="absolute left-15 top-0 h-full flex items-center justify-center flex-col"
         style={{
           fontFamily: 'Noto Serif, serif',
           color: '#F0E68C',
@@ -133,7 +133,7 @@ const Login: React.FC = () => {
 
       {/* Chữ "HẢO HÁN" bên phải */}
       <div
-        className="absolute right-25 top-0 h-full flex items-center justify-center flex-col"
+        className="absolute right-15 top-0 h-full flex items-center justify-center flex-col"
         style={{
           fontFamily: 'Noto Serif, serif',
           color: '#F0E68C',
