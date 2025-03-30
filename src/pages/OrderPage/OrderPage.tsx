@@ -113,9 +113,8 @@ export const OrderPage = () => {
     <>
       <HeaderPage />
       <div className='container mx-auto mt-5'>
-        Order Zone
         <div className="orderZone">
-          <h2>Phiếu Order {tableName}</h2>
+          <h2>Phiếu Order {tableName} - mã bàn: {tableId}</h2>
           <table>
             <thead>
               <tr>
