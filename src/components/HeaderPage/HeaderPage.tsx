@@ -24,7 +24,7 @@ export const HeaderPage = () => {
     <>
       <div className='header'>
         <div className="logoContainer">
-          <img src="/logo.png" alt="Logo Nhà Hàng" className="logoImage" />
+          <img src="logo.png" alt="Logo Nhà Hàng" className="logoImage" />
           <div
             style={{
               position: 'absolute',
