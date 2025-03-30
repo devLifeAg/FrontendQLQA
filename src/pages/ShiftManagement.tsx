@@ -28,7 +28,7 @@ const ShiftManagement: React.FC = () => {
       const data = await response.json();
 
       if (data.result === 1 && data.danhsachketca.length > 0) {
-        const formattedShifts: Shift[] = data.danhsachketca.map((item) => ({
+        const formattedShifts: Shift[] = data.danhsachketca.map((item: any) => ({
           id: item.kc_id,
           date: new Date(item.kc_ngaygio).toLocaleDateString("vi-VN"),
           totalRevenue: item.kc_tongtien,

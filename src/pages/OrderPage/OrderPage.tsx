@@ -113,6 +113,7 @@ export const OrderPage = () => {
       <HeaderPage />
       <div className='container mx-auto mt-5'>
         {/* Order Zone */}
+        <input type="hidden" value={tableId} />
         <div className="orderZone">
           <h2>Phiếu Order {tableName}</h2>
           <table>
