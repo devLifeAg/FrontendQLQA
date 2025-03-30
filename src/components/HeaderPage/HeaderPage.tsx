@@ -3,7 +3,7 @@ import { Menu as MenuIcon } from '@mui/icons-material';
 import { useState } from 'react';
 import './HeaderPage.css';
 import { useNavigate } from 'react-router-dom';
-
+import logo from '/logo.png'; // Đường dẫn tuyệt đối từ thư mục public
 export const HeaderPage = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export const HeaderPage = () => {
     <>
       <div className='header'>
         <div className="logoContainer">
-          <img src="/logo.png" alt="Logo Nhà Hàng" className="logoImage" />
+          <img src={logo} alt="Logo Nhà Hàng" className="logoImage" />
           <div
             style={{
               position: 'absolute',

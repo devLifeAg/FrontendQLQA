@@ -14,22 +14,20 @@ import PrivateRoute from './components/PrivateRoute'; // Import PrivateRoute
 function App() {
   return (
     <>
-    <ToastContainer />
-      <BrowserRouter>
-      <div className="">
+      <ToastContainer />
+      <BrowserRouter basename='/FrontendQLQA/'>
         <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/Home" element={<PrivateRoute disallowedRoles={[]} children={<Home />} />} />
-        <Route path="/Order/:b_id" element={<PrivateRoute disallowedRoles={[]} children={<OrderPage />} />} />
-        <Route path="/TTQ" element={<PrivateRoute disallowedRoles={[2, 3]} children={<ManageQuanPage />} />} />
-        <Route path="/QLPL" element={<PrivateRoute disallowedRoles={[1, 2, 3]} children={<ManagePL />} />} />
-        <Route path="/QLTK" element={<PrivateRoute disallowedRoles={[1, 2, 3]} children={<QLTK />} />} />
-        <Route path="/QLKC" element={<PrivateRoute disallowedRoles={[3]} children={<QLKC />} />} />
-        <Route path="/QLDT" element={<PrivateRoute disallowedRoles={[1,2,3]} children={<RevenuePage/>} />}/>
-          <Route path="/QLMA" element={<PrivateRoute disallowedRoles={[2,3]} children={<FoodManagementPage />} />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/Home" element={<PrivateRoute disallowedRoles={[]} children={<Home />} />} />
+          <Route path="/Order/:b_id" element={<PrivateRoute disallowedRoles={[]} children={<OrderPage />} />} />
+          <Route path="/TTQ" element={<PrivateRoute disallowedRoles={[2, 3]} children={<ManageQuanPage />} />} />
+          <Route path="/QLPL" element={<PrivateRoute disallowedRoles={[1, 2, 3]} children={<ManagePL />} />} />
+          <Route path="/QLTK" element={<PrivateRoute disallowedRoles={[1, 2, 3]} children={<QLTK />} />} />
+          <Route path="/QLKC" element={<PrivateRoute disallowedRoles={[3]} children={<QLKC />} />} />
+          <Route path="/QLDT" element={<PrivateRoute disallowedRoles={[1, 2, 3]} children={<RevenuePage />} />} />
+          <Route path="/QLMA" element={<PrivateRoute disallowedRoles={[2, 3]} children={<FoodManagementPage />} />} />
         </Routes>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
     </>
   )
 }

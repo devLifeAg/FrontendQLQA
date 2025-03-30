@@ -53,11 +53,12 @@ const Login: React.FC = () => {
     >
       {/* Chữ "NHÀ HÀNG" bên trái */}
       <div
-        className="absolute left-25 top-0 h-full flex items-center justify-center flex-col"
+        className="absolute inset-y-0 left-15 h-full flex items-center justify-center flex-col 
+  hidden md:hidden xl:flex xl:text-[8rem]"
         style={{
           fontFamily: 'Noto Serif, serif',
           color: '#F0E68C',
-          fontSize: '8rem',
+          // fontSize: '8rem',
           fontWeight: 'bold',
           padding: '10px'
         }}
@@ -133,11 +134,12 @@ const Login: React.FC = () => {
 
       {/* Chữ "HẢO HÁN" bên phải */}
       <div
-        className="absolute right-25 top-0 h-full flex items-center justify-center flex-col"
+        className="absolute inset-y-0 right-15 h-full flex items-center justify-center flex-col 
+  hidden md:hidden xl:flex xl:text-[8rem]"
         style={{
           fontFamily: 'Noto Serif, serif',
           color: '#F0E68C',
-          fontSize: '8rem',
+          // fontSize: '8rem',
           fontWeight: 'bold',
           padding: '10px'
         }}
