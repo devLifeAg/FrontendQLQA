@@ -32,11 +32,11 @@ const RevenuePage = () => {
         try {
             const response = await fetch(apiUrl);
             console.log("Response status:", response.status);
-            console.log("Response text:", await response.text());
             if (!response.ok) {
                 throw new Error("Lỗi khi lấy dữ liệu từ server");
             }
             const data = await response.json();
+            console.log("Response data:", data);
             setRevenueData(data);
         } catch (err) {
             setError((err as Error).message);
@@ -50,8 +50,8 @@ const RevenuePage = () => {
         <>
             <HeaderPage />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <div className="p-4 space-y-4">
-                    <div className="flex gap-4">
+                <div className="p-4 space-y-4 mt-8 flex flex-col items-center">
+                    <div className="flex gap-4 items-center">
                         <DatePicker label="Từ ngày" value={startDate} onChange={(newValue) => setStartDate(newValue ? dayjs(newValue) : null)} />
                         <DatePicker label="Đến ngày" value={endDate} onChange={(newValue) => setEndDate(newValue ? dayjs(newValue) : null)} />
                         <Button variant="contained" color="primary" onClick={handleSearch} disabled={loading}>
@@ -72,7 +72,7 @@ const RevenuePage = () => {
                             <Card>
                                 <CardContent>
                                     <h2 className="text-xl font-bold">Tổng số hóa đơn</h2>
-                                    <p className="text-lg">{revenueData.total_tongtien}</p>
+                                    <p className="text-lg">{revenueData.total_tongtien} cái cc</p>
                                 </CardContent>
                             </Card>
                         </div>

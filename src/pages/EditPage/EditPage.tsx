@@ -22,6 +22,7 @@ export const EditPage = ({openEdit, setOpenEdit, fetchFoods, selectedFood}: Edit
     const [monTen, setMonTen] = useState("");
     const [monGia, setMonGia] = useState(0);
     const [monLoai, setMonLoai] = useState(1);
+    const [monMoTa, setMonMoTa] = useState<string | null>(null);
     const [monHinh, setMonHinh] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
 
@@ -31,6 +32,7 @@ export const EditPage = ({openEdit, setOpenEdit, fetchFoods, selectedFood}: Edit
         if (openEdit && selectedFood) {
             setMonTen(selectedFood.mon_tenmon);
             setMonGia(selectedFood.mon_giamon);
+            setMonMoTa(selectedFood.mon_mota);
             setMonLoai(selectedFood.pl_id);
             setPreview(selectedFood.mon_hinhmon);
             setMonHinh(null);
@@ -49,7 +51,7 @@ export const EditPage = ({openEdit, setOpenEdit, fetchFoods, selectedFood}: Edit
     };
 
     const handleUpdateFood = async () => {
-        console.log("Cập nhật món ăn:", { monTen, monGia, monHinh, monLoai });
+        console.log("Cập nhật món ăn:", { monTen, monGia, monMoTa, monHinh, monLoai });
         // Nếu không có dữ liệu, quay về trang quản lý món ăn
         if (!selectedFood) {
             return alert("Không có dữ liệu món ăn!");
@@ -60,7 +62,8 @@ export const EditPage = ({openEdit, setOpenEdit, fetchFoods, selectedFood}: Edit
         formData.append("pl_id", monLoai.toString());
         formData.append("mon_tenmon", monTen);
         formData.append("mon_giamon", monGia.toString());
-        formData.append("mon_mota", "Mô tả món ăn mặc định");
+        formData.append("mon_mota", monMoTa || "Món ăn này ko thằng nào mô tả");
+        
         if (monHinh) formData.append("mon_hinhmon", monHinh);
 
         try {
@@ -89,9 +92,10 @@ export const EditPage = ({openEdit, setOpenEdit, fetchFoods, selectedFood}: Edit
             <Box display="flex" flexDirection="column" gap={2}>
                 <TextField fullWidth label="Tên món ăn" variant="outlined" value={monTen} 
                     onChange={(e) => setMonTen(e.target.value)} />
-                <TextField fullWidth label="Giá món ăn" variant="outlined" type="number" value={monGia} 
+                <TextField fullWidth label="Giá món ăn" variant="outlined" value={monGia} 
                     onChange={(e) => setMonGia(Number(e.target.value))} />
-                    
+                <TextField fullWidth label="Mô tả món ăn" variant="outlined" value={monMoTa}
+                    onChange={(e) => setMonMoTa(e.target.value)} />
                 <FormControl fullWidth>
                     <InputLabel>Phân loại món ăn</InputLabel>
                     <Select value={monLoai} onChange={(e) => setMonLoai(Number(e.target.value))}>
