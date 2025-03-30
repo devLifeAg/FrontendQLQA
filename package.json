@@ -1,5 +1,6 @@
 {
   "name": "frontend",
+  "homepage": "https://devLifeAg.github.io/FrontendQLQA/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -20,6 +21,7 @@
     "arg": "^5.0.2",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.4.10",
+    "gh-pages": "^6.3.0",
     "lucide-react": "^0.479.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
