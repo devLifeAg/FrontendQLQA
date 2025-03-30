@@ -1,47 +1,46 @@
 import React, { useState } from "react";
 import { Card, CardContent, Button } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { HeaderPage } from '../../components/HeaderPage/HeaderPage';
 
-const API_URL = "https://quanlyquananapi-production.up.railway.app/api/doanhthu";
 
-const RevenuePage: React.FC = () => {
+const RevenuePage = () => {
     //   const [month, setMonth] = useState<Dayjs | null>(dayjs());
     //   const [startDate, setStartDate] = useState<Dayjs | null>(null);
     //   const [endDate, setEndDate] = useState<Dayjs | null>(null);
 
-    const [startDate, setStartDate] = useState<Dayjs | null>(null);
-    const [endDate, setEndDate] = useState<Dayjs | null>(null);
-    const [revenueData, setRevenueData] = useState<{ total_tongtien: number; total_sl_hd: number } | null>(null);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [revenueData, setRevenueData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState(null);
 
     const handleSearch = async () => {
         if (!startDate || !endDate) {
-            alert("Vui lòng chọn ngày bắt đầu và ngày kết thúc!");
+            setError("Bạn cần chọn ngày xuất doanh thu");
             return;
         }
+
         setLoading(true);
         setError(null);
+        setRevenueData(null);
 
-        const formattedStartDate = startDate.format("YYYY-MM-DD");
-        const formattedEndDate = endDate.format("YYYY-MM-DD");
-        const url = `${API_URL}?start_date=${formattedStartDate}&end_date=${formattedEndDate}`;
+        const apiUrl = `https://quanlyquananapi-production.up.railway.app/api/doanhthu?start_date=${dayjs(startDate).format("YYYY-MM-DD")}&end_date=${dayjs(endDate).format("YYYY-MM-DD")}`;
 
         try {
-            const response = await fetch(url);
+            const response = await fetch(apiUrl);
+            console.log("Response status:", response.status);
+            console.log("Response text:", await response.text());
             if (!response.ok) {
-                throw new Error("Lỗi khi lấy dữ liệu từ API");
+                throw new Error("Lỗi khi lấy dữ liệu từ server");
             }
             const data = await response.json();
             setRevenueData(data);
-        }
-        catch (err) {
-            setError(err instanceof Error ? err.message : "Đã xảy ra lỗi");
-        }
-        finally {
+        } catch (err) {
+            setError(err.message);
+        } finally {
             setLoading(false);
         }
     };
@@ -53,8 +52,8 @@ const RevenuePage: React.FC = () => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <div className="p-4 space-y-4">
                     <div className="flex gap-4">
-                        <DatePicker label="Từ ngày" value={startDate} onChange={setStartDate} />
-                        <DatePicker label="Đến ngày" value={endDate} onChange={setEndDate} />
+                        <DatePicker label="Từ ngày" value={startDate} onChange={(newValue) => setStartDate(newValue ? dayjs(newValue) : null)} />
+                        <DatePicker label="Đến ngày" value={endDate} onChange={(newValue) => setEndDate(newValue ? dayjs(newValue) : null)} />
                         {/* <DatePicker views={["year", "month"]} label="Chọn tháng năm" value={month}
                     onChange={(newValue) => setMonth(newValue ? dayjs(newValue) : null)}/> */}
 
@@ -69,7 +68,7 @@ const RevenuePage: React.FC = () => {
                     {/* Hiển thị doanh thu */}
                     {error && <p className="text-red-500">{error}</p>}
                     {revenueData && (
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                             <Card>
                                 <CardContent>
                                     <h2 className="text-xl font-bold">Tổng doanh thu</h2>
@@ -79,7 +78,7 @@ const RevenuePage: React.FC = () => {
                             <Card>
                                 <CardContent>
                                     <h2 className="text-xl font-bold">Tổng số hóa đơn</h2>
-                                    <p className="text-lg">{revenueData.total_sl_hd}</p>
+                                    <p className="text-lg">{revenueData.total_tongtien}</p>
                                 </CardContent>
                             </Card>
                         </div>

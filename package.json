@@ -10,11 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@date-io/dayjs": "^3.2.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.2.5",
-    "@mui/icons-material": "^6.4.7",
-    "@mui/material": "^6.4.7",
+    "@mui/icons-material": "^6.4.9",
+    "@mui/material": "^6.4.9",
     "@mui/x-date-pickers": "^7.28.2",
     "@tailwindcss/vite": "^4.0.12",
     "arg": "^5.0.2",
@@ -23,7 +24,7 @@
     "lucide-react": "^0.479.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.3.0",
+    "react-router-dom": "^7.4.1",
     "react-toastify": "^11.0.5"
   },
   "devDependencies": {
