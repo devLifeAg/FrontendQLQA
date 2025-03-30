@@ -91,17 +91,17 @@ export const EditPage = ({openEdit, setOpenEdit, fetchFoods, selectedFood}: Edit
         <DialogContent>
             <Box display="flex" flexDirection="column" gap={2}>
                 <TextField fullWidth label="Tên món ăn" variant="outlined" value={monTen} 
-                    onChange={(e) => setMonTen(e.target.value)} />
+                    onChange={(e) => setMonTen(e.target.value)} sx={{ mt: 2 }}/>
                 <TextField fullWidth label="Giá món ăn" variant="outlined" value={monGia} 
                     onChange={(e) => setMonGia(Number(e.target.value))} />
                 <TextField fullWidth label="Mô tả món ăn" variant="outlined" value={monMoTa}
                     onChange={(e) => setMonMoTa(e.target.value)} />
-                <FormControl fullWidth>
+                <FormControl fullWidth >
                     <InputLabel>Phân loại món ăn</InputLabel>
-                    <Select value={monLoai} onChange={(e) => setMonLoai(Number(e.target.value))}>
+                    <Select value={monLoai} onChange={(e) => setMonLoai(Number(e.target.value))} label="Phân loại món ăn">
                         <MenuItem value={1}>Cơm</MenuItem>
                         <MenuItem value={2}>Mì</MenuItem>
-                        <MenuItem value={   3}>Canh</MenuItem>
+                        <MenuItem value={3}>Canh</MenuItem>
                         <MenuItem value={4}>Tráng miệng</MenuItem>
                         <MenuItem value={5}>Nước</MenuItem>
                     </Select>
@@ -118,8 +118,18 @@ export const EditPage = ({openEdit, setOpenEdit, fetchFoods, selectedFood}: Edit
             </Box>
         </DialogContent>
         <DialogActions>
-                <Button variant="contained" color="primary" onClick={handleUpdateFood} fullWidth>Cập nhật</Button>
-                <Button variant="outlined" color="secondary" onClick={() => setOpenEdit(false)} fullWidth>Hủy</Button>
+                <Button variant="contained" color="primary" onClick={handleUpdateFood} fullWidth     
+                sx={{   backgroundColor: "#1976d2", fontWeight: "bold", textTransform: "none", borderRadius: "8px", transition: "all 0.3s ease-in-out",
+                        "&:hover": { backgroundColor: "#1565c0", transform: "scale(1.05)", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",},
+                        "&:active": { transform: "scale(0.98)",},
+                    }}>Cập nhật</Button>
+                <Button variant="outlined" color="inherit" onClick={() => setOpenEdit(false)} fullWidth 
+                sx={{   borderColor: "#9e9e9e", color: "#616161", fontWeight: "bold", textTransform: "none", borderRadius: "8px",
+                        transition: "all 0.3s ease-in-out",
+                        "&:hover": {    backgroundColor: "#e0e0e0", color: "#212121", borderColor: "#616161", transform: "scale(1.05)",
+                                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",},
+                        "&:active": { transform: "scale(0.98)",},
+                    }}>Hủy</Button>
             </DialogActions>
     </Dialog>
     </>

@@ -7,7 +7,7 @@ import { HeaderPage } from '../../components/HeaderPage/HeaderPage';
 
 type RevenueData = {
     total_tongtien: number;
-    total_hoadon: number;
+    total_sl_hd: number;
 };
 
 const RevenuePage = () => {
@@ -20,6 +20,10 @@ const RevenuePage = () => {
     const handleSearch = async () => {
         if (!startDate || !endDate) {
             setError("Bạn cần chọn ngày xuất doanh thu");
+            return;
+        }
+        if (endDate.isBefore(startDate)) {
+            setError("Bị sai ngày khi chọn rồi");
             return;
         }
 
@@ -72,7 +76,7 @@ const RevenuePage = () => {
                             <Card>
                                 <CardContent>
                                     <h2 className="text-xl font-bold">Tổng số hóa đơn</h2>
-                                    <p className="text-lg">{revenueData.total_tongtien} cái cc</p>
+                                    <p className="text-lg">{revenueData.total_sl_hd} cái</p>
                                 </CardContent>
                             </Card>
                         </div>
