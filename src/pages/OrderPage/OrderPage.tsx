@@ -57,7 +57,8 @@ export const OrderPage = () => {
               mon_id: mon.mon_id,
               pl_id: cat.pl_id, // Gán id danh mục vào món ăn
               mon_tenmon: mon.mon_tenmon,
-              mom_giamon: mon.mon_giamon,
+              // mom_giamon: mon.mon_giamon,
+              mon_giamon: mon.mon_giamon,
               mon_mota: mon.mon_mota,
               mon_hinhmon: mon.mon_hinhmon,
               mon_trangthai: mon.mon_trangthai,
@@ -112,7 +113,7 @@ export const OrderPage = () => {
     <>
       <HeaderPage />
       <div className='container mx-auto mt-5'>
-        {/* Order Zone */}
+        Order Zone
         <div className="orderZone">
           <h2>Phiếu Order {tableName}</h2>
           <table>
@@ -183,3 +184,4 @@ export const OrderPage = () => {
     </>
   );
 };
+
