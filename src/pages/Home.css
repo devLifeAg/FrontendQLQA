@@ -1,0 +1,26 @@
+/* App.css */
+.btn-custom {
+    background-color: #8B4513; /* Màu nền */
+    color: #F0E68C; /* Màu chữ */
+    padding: 0.5rem 1rem; /* Tương đương với px-4 py-2 */
+    border-radius: 0.5rem; /* Tương đương với rounded-lg */
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: background-color 0.3s;
+  }
+
+  .btn-ban {
+    background-color: #ad5c22; /* Màu nền */
+    color: #F0E68C; /* Màu chữ */
+    padding: 0.5rem 1rem; /* Tương đương với px-4 py-2 */
+    border-radius: 0.5rem; /* Tương đương với rounded-lg */
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-custom.selected {
+    background-color: #6B2F0B !important; /* Màu nền khi được chọn */
+  }
