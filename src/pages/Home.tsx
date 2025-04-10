@@ -30,6 +30,7 @@ interface Ban {
   b_tenban: string;
   b_trangthai: number;
   t_id: number;
+  trong: boolean;
 }
 
 const Home: React.FC = () => {
@@ -78,8 +79,8 @@ const Home: React.FC = () => {
 
         {/* Danh sách tầng */}
         <Typography className="!mt-6" sx={{ color: '#8B4513', fontWeight: 'bold', fontFamily: 'Noto Serif, serif' }} variant="h3" gutterBottom>
-              Danh Sách Tầng
-            </Typography>
+          Danh Sách Tầng
+        </Typography>
         <div className="flex space-x-4 mb-6">
           {floors.map(floor => (
             <button
@@ -95,24 +96,28 @@ const Home: React.FC = () => {
 
         {/* Danh sách bàn */}
         {selectedFloorData && (
-        <>
-          <Typography className="!mt-6" sx={{ color: '#ad5c22', fontWeight: 'bold', fontFamily: 'Noto Serif, serif' }} variant="h4" gutterBottom>
+          <>
+            <Typography className="!mt-6" sx={{ color: '#ad5c22', fontWeight: 'bold', fontFamily: 'Noto Serif, serif' }} variant="h4" gutterBottom>
               Danh Sách Bàn {floors.find((f) => f.t_id === selectedFloor)?.t_tentang}
             </Typography>
-          <div className="grid grid-cols-3 gap-4">
-            {selectedFloorData.danhsachban.map(ban => (
-              <button
-              key={ban.b_id}
-              onClick={() => handleBanClick(ban.b_id, ban.b_tenban)}
-              className={`btn-ban px-4 py-2 rounded-lg btn-custom ${ban.b_trangthai === 0 ? 'opacity-80 cursor-not-allowed' : ''}`}
-              disabled={ban.b_trangthai === 0}
-            >
-              {ban.b_tenban}
-            </button>
-            ))}
-          </div>
-        </>
-      )}
+            <div className="grid grid-cols-3 gap-4">
+              {selectedFloorData.danhsachban.map(ban => (
+                <button
+                  key={ban.b_id}
+                  onClick={() => handleBanClick(ban.b_id, ban.b_tenban)}
+                  className={`btn-ban px-4 py-2 rounded-lg btn-custom ${ban.b_trangthai === 0 ? 'opacity-80 cursor-not-allowed' : ''}
+              ${ban.trong ? '' : '!bg-red-500 !text-white'}`}
+                  disabled={ban.b_trangthai === 0}
+                >
+                  {ban.b_tenban}
+                  <div className="text-sm mt-1">
+                    {ban.trong ? 'Trống' : 'Có khách'}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </>
   );
