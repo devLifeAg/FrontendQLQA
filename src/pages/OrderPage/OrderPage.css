@@ -111,3 +111,22 @@
       grid-template-columns: repeat(2, minmax(150px, 1fr));
   }
 }
+
+
+.quantity-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.quantity-control button:hover {
+  background-color: #ddd;
+}
+
+.quantity-number {
+  min-width: 24px;
+  text-align: center;
+  font-weight: bold;
+}
