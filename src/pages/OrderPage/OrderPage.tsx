@@ -326,7 +326,9 @@ export const OrderPage = () => {
                     {(item.mon_giamon * item.quantity).toLocaleString()} đ
                   </td>
                   <td>
-                    {newOrderList.some((newItem) => newItem.mon_id === item.mon_id) && (
+                    {newOrderList.some(
+                      (newItem) => newItem.mon_id === item.mon_id
+                    ) && (
                       <button
                         onClick={() => handleRemoveFromOrder(item.mon_id)}
                       >
@@ -338,19 +340,29 @@ export const OrderPage = () => {
               ))}
             </tbody>
           </table>
-          <div className="totalAmount">
-            Tổng cộng: {totalAmount.toLocaleString()} đ
-            <button className="submitButton" onClick={handleSubmitOrder}>
-              Gửi món
-            </button>
-            {hasOrderData && (
+          <div className="totalAmountContainer">
+            <div className="totalAmountText">
+              Tổng cộng:{" "}
+              <span className="totalAmountValue">
+                {totalAmount.toLocaleString()} đ
+              </span>
+            </div>
+            <div className="totalAmountButtons">
               <button
-                className="submitButton"
-                onClick={() => setOpenPaymentDialog(true)}
+                className="submitButton orderButton"
+                onClick={handleSubmitOrder}
               >
-                Thanh toán
+                Gửi món
               </button>
-            )}
+              {hasOrderData && (
+                <button
+                  className="submitButton paymentButton"
+                  onClick={() => setOpenPaymentDialog(true)}
+                >
+                  Thanh toán
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -483,7 +495,6 @@ export const OrderPage = () => {
                 const result = await response.json();
 
                 if (response.ok) {
-
                   showSuccessToast("Thanh toán thành công!");
                   // Có thể reset lại orderList nếu muốn
                   navigate("/Home");
