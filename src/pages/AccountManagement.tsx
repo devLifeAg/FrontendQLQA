@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../components/HeaderPage/HeaderPage";
 import {
   showSuccessToast,
@@ -11,7 +10,7 @@ interface Account {
   name: string;
   username: string;
   password: string;
-  role: number; // 1: admin, 2: quản lý, 3: thu ngân, 4: nhân viên order
+  role: number; // 0: admin, 1: quản lý, 2: thu ngân, 3: nhân viên order
 }
 
 const AccountManagement: React.FC = () => {
@@ -21,9 +20,18 @@ const AccountManagement: React.FC = () => {
     name: "",
     username: "",
     password: "",
-    role: 1,
+    role: 0,
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [accountToDelete, setAccountToDelete] = useState<number | null>(null);
+
+  const roles = [
+    { id: 0, label: "Admin" },
+    { id: 1, label: "Quản lý" },
+    { id: 2, label: "Thu ngân" },
+    { id: 3, label: "Nhân viên order" },
+  ];
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -38,7 +46,7 @@ const AccountManagement: React.FC = () => {
             id: acc.u_id,
             name: acc.u_name,
             username: acc.u_username,
-            password: "", // Không có mật khẩu từ API
+            password: "",
             role: acc.u_role,
           }));
           setAccounts(formattedAccounts);
@@ -52,13 +60,6 @@ const AccountManagement: React.FC = () => {
 
     fetchAccounts();
   }, []);
-
-  const roles = [
-    { id: 0, label: "Admin" },
-    { id: 1, label: "Quản lý" },
-    { id: 2, label: "Thu ngân" },
-    { id: 3, label: "Nhân viên order" },
-  ];
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -78,18 +79,18 @@ const AccountManagement: React.FC = () => {
 
     const updatedAccount: any = {
       u_username: account.username,
-      u_pass: account.password || undefined, // Không gửi password nếu không nhập mới
+      u_pass: account.password || undefined,
       u_role: account.role,
       u_name: account.name,
     };
-    // console.log(updatedAccount);
+
     if (isEditing) {
       try {
         updatedAccount._method = "PUT";
         const response = await fetch(
           `https://quanlyquananapi-production.up.railway.app/api/suataikhoan/${account.id}`,
           {
-            method: "POST", // Laravel yêu cầu dùng POST với `_method: PUT`
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
@@ -114,7 +115,7 @@ const AccountManagement: React.FC = () => {
             )
           );
           setIsEditing(false);
-          setAccount({ id: 0, name: "", username: "", password: "", role: 1 });
+          setAccount({ id: 0, name: "", username: "", password: "", role: 0 });
         } else {
           showErrorToast(data.message);
         }
@@ -122,7 +123,6 @@ const AccountManagement: React.FC = () => {
         showErrorToast("Lỗi kết nối đến server!");
       }
     } else {
-      // Xử lý thêm tài khoản mới
       try {
         const response = await fetch(
           "https://quanlyquananapi-production.up.railway.app/api/taotaikhoan",
@@ -149,7 +149,7 @@ const AccountManagement: React.FC = () => {
               role: parseInt(data.user.u_role),
             },
           ]);
-          setAccount({ id: 0, name: "", username: "", password: "", role: 1 });
+          setAccount({ id: 0, name: "", username: "", password: "", role: 0 });
         } else {
           showErrorToast(data.message);
         }
@@ -160,18 +160,21 @@ const AccountManagement: React.FC = () => {
   };
 
   const handleEdit = (acc: Account) => {
-    setAccount({ ...acc, password: "" }); // Không hiển thị mật khẩu cũ
+    setAccount({ ...acc, password: "" });
     setIsEditing(true);
   };
 
-  const handleDelete = async (id: number) => {
-    if (!window.confirm("Bạn có chắc chắn muốn xóa tài khoản này?")) {
-      return;
-    }
+  const handleDeleteClick = (id: number) => {
+    setAccountToDelete(id);
+    setShowConfirmDelete(true);
+  };
+
+  const confirmDelete = async () => {
+    if (accountToDelete === null) return;
 
     try {
       const response = await fetch(
-        `https://quanlyquananapi-production.up.railway.app/api/xoataikhoan/${id}`,
+        `https://quanlyquananapi-production.up.railway.app/api/xoataikhoan/${accountToDelete}`,
         {
           method: "DELETE",
         }
@@ -181,24 +184,20 @@ const AccountManagement: React.FC = () => {
 
       if (response.ok) {
         showSuccessToast(data.message);
-
-        setAccounts(accounts.filter((acc) => acc.id !== id));
+        setAccounts(accounts.filter((acc) => acc.id !== accountToDelete));
       } else {
         showErrorToast(data.message);
       }
     } catch (error) {
       showErrorToast("Lỗi kết nối đến server!");
     }
+
+    setShowConfirmDelete(false);
+    setAccountToDelete(null);
   };
 
   const handleDeleteInput = () => {
-    setAccount({
-      id: 0,
-      name: "",
-      username: "",
-      password: "",
-      role: 0,
-    });
+    setAccount({ id: 0, name: "", username: "", password: "", role: 0 });
     setIsEditing(false);
   };
 
@@ -208,7 +207,6 @@ const AccountManagement: React.FC = () => {
       <div className="p-6 max-w-lg mx-auto bg-white shadow-md rounded-lg">
         <h2 className="text-2xl font-semibold mb-4">Quản lý tài khoản</h2>
 
-        {/* Form nhập thông tin */}
         <div className="space-y-4">
           <input
             type="text"
@@ -250,25 +248,20 @@ const AccountManagement: React.FC = () => {
             <button
               onClick={handleDeleteInput}
               className="w-full p-2 text-white rounded"
-              style={{
-                backgroundColor: "#B22222", // Màu đỏ lửa (firebrick)
-              }}
+              style={{ backgroundColor: "#B22222" }}
             >
               Xóa
             </button>
             <button
               onClick={handleSubmit}
               className="w-full p-2 text-white rounded"
-              style={{
-                backgroundColor: "#8B4513", // Màu nâu
-              }}
+              style={{ backgroundColor: "#8B4513" }}
             >
               {isEditing ? "Cập nhật" : "Thêm"}
             </button>
           </div>
         </div>
 
-        {/* Danh sách tài khoản */}
         <h3 className="text-xl font-semibold mt-6 mb-2">Danh sách tài khoản</h3>
         <div className="space-y-2">
           {accounts
@@ -287,10 +280,10 @@ const AccountManagement: React.FC = () => {
                 </div>
                 <button
                   onClick={(e) => {
-                    e.stopPropagation(); // Ngăn chặn sự kiện onClick của div cha
-                    handleDelete(acc.id);
+                    e.stopPropagation();
+                    handleDeleteClick(acc.id);
                   }}
-                  className="text-white !bg-red-500 hover:!bg-red-600"
+                  className="px-3 py-1 text-white !bg-red-500 hover:!bg-red-600 rounded"
                 >
                   Xóa
                 </button>
@@ -298,6 +291,29 @@ const AccountManagement: React.FC = () => {
             ))}
         </div>
       </div>
+
+      {/* Modal xác nhận xóa */}
+      {showConfirmDelete && (
+        <div className="fixed inset-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg z-50">
+            <p className="mb-4">Bạn có chắc chắn muốn xóa tài khoản này?</p>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={() => setShowConfirmDelete(false)}
+                className="px-4 py-2 bg-gray-300 rounded"
+              >
+                Hủy
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 !bg-red-600 text-white rounded"
+              >
+                Xóa
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

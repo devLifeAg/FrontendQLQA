@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../components/HeaderPage/HeaderPage";
+
 interface Shift {
   id: number;
   date: string;
@@ -19,9 +20,8 @@ const ShiftManagement: React.FC = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [previewData, setPreviewData] = useState<any | null>(null);
   const [showPreview, setShowPreview] = useState(false);
-  const userId = 1; // ID người dùng
+  const userId = 1;
 
-  // Fetch danh sách kết ca từ API
   const fetchShifts = async () => {
     try {
       const response = await fetch(
@@ -51,7 +51,6 @@ const ShiftManagement: React.FC = () => {
     fetchShifts();
   }, []);
 
-  // Gọi API xem trước kết ca
   const previewShift = async () => {
     try {
       const response = await fetch(
@@ -65,7 +64,6 @@ const ShiftManagement: React.FC = () => {
     }
   };
 
-  // Gọi API để tạo kết ca mới
   const createShift = async () => {
     setIsCreating(true);
     setShowPreview(false);
@@ -78,7 +76,7 @@ const ShiftManagement: React.FC = () => {
 
       if (data.kc_id) {
         alert("✅ Tạo kết ca thành công!");
-        fetchShifts(); // Cập nhật danh sách sau khi tạo kết ca
+        fetchShifts();
       } else {
         alert(`❌ Lỗi: ${data.error}`);
       }
@@ -88,7 +86,6 @@ const ShiftManagement: React.FC = () => {
     setIsCreating(false);
   };
 
-  // Xem chi tiết ca + lấy hóa đơn thực tế từ API
   const handleViewShiftDetails = async (shift: Shift) => {
     try {
       const response = await fetch(
@@ -122,18 +119,14 @@ const ShiftManagement: React.FC = () => {
       <div className="flex flex-col items-center p-6">
         <h1 className="text-2xl font-bold mb-4">Quản Lý Kết Ca</h1>
 
-        {/* Nút xem trước kết ca */}
         <button
           className="mb-4 px-4 py-2 text-white rounded"
-          style={{
-            backgroundColor: "#8B4513",
-          }}
+          style={{ backgroundColor: "#8B4513" }}
           onClick={previewShift}
         >
           Xem Trước Kết Ca
         </button>
 
-        {/* Danh sách kết ca */}
         <div className="w-full max-w-4xl !bg-white shadow-md p-4 rounded-lg">
           <h2 className="text-xl font-semibold mb-3">Danh sách kết ca</h2>
           {shifts.length === 0 ? (
@@ -153,10 +146,8 @@ const ShiftManagement: React.FC = () => {
                   </p>
                 </div>
                 <button
-                  className="px-4 py-2  text-white rounded "
-                  style={{
-                    backgroundColor: "#8B4513",
-                  }}
+                  className="px-4 py-2  text-white rounded"
+                  style={{ backgroundColor: "#8B4513" }}
                   onClick={() => handleViewShiftDetails(shift)}
                 >
                   Xem chi tiết
@@ -166,39 +157,39 @@ const ShiftManagement: React.FC = () => {
           )}
         </div>
 
-        {/* Xem trước kết ca */}
         {showPreview && previewData && (
-          <div className="w-full max-w-2xl bg-white shadow-md p-4 rounded-lg mt-6">
-            <h2 className="text-xl font-semibold mb-3">Xem Trước Kết Ca</h2>
-            <p>
-              Giờ bắt đầu:{" "}
-              {new Date(previewData.giobatdauban).toLocaleTimeString()}
-            </p>
-            <p>
-              Giờ hiện tại:{" "}
-              {new Date(previewData.giohientai).toLocaleTimeString()}
-            </p>
-            <p>Tổng tiền: {previewData.tongtien.toLocaleString()} VND</p>
-            <p>Số lượng hóa đơn: {previewData.soluonghoadon}</p>
-            <div className="flex gap-4 mt-4">
-              <button
-                className="px-4 py-2 !bg-red-500 text-white rounded hover:!bg-red-600"
-                onClick={() => setShowPreview(false)}
-              >
-                Hủy
-              </button>
-              <button
-                className="px-4 py-2 !bg-green-500 text-white rounded hover:!bg-green-600"
-                onClick={createShift}
-                disabled={isCreating}
-              >
-                {isCreating ? "Đang tạo..." : "Xác nhận tạo kết ca"}
-              </button>
+          <div className="fixed inset-0 z-40 flex items-center justify-center bg-white/30 backdrop-blur-sm">
+            <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6 z-50">
+              <h2 className="text-xl font-semibold mb-3">Xem Trước Kết Ca</h2>
+              <p>
+                Giờ bắt đầu:{" "}
+                {new Date(previewData.giobatdauban).toLocaleTimeString()}
+              </p>
+              <p>
+                Giờ hiện tại:{" "}
+                {new Date(previewData.giohientai).toLocaleTimeString()}
+              </p>
+              <p>Tổng tiền: {previewData.tongtien.toLocaleString()} VND</p>
+              <p>Số lượng hóa đơn: {previewData.soluonghoadon}</p>
+              <div className="flex gap-4 mt-4">
+                <button
+                  className="px-4 py-2 !bg-red-500 text-white rounded hover:!bg-red-600"
+                  onClick={() => setShowPreview(false)}
+                >
+                  Hủy
+                </button>
+                <button
+                  className="px-4 py-2 !bg-green-500 text-white rounded hover:!bg-green-600"
+                  onClick={createShift}
+                  disabled={isCreating}
+                >
+                  {isCreating ? "Đang tạo..." : "Xác nhận tạo kết ca"}
+                </button>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Chi tiết hóa đơn của ca */}
         {selectedShift && (
           <div className="w-full max-w-4xl bg-white shadow-md p-4 rounded-lg mt-6">
             <h2 className="text-xl font-semibold mb-3">
