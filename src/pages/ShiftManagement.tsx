@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { HeaderPage } from "../components/HeaderPage/HeaderPage";
+import { showSuccessToast, showErrorToast, } from "../components/ToastService/ToastService";
 
 interface Shift {
   id: number;
@@ -20,7 +21,7 @@ const ShiftManagement: React.FC = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [previewData, setPreviewData] = useState<any | null>(null);
   const [showPreview, setShowPreview] = useState(false);
-  const userId = 1;
+  const user = JSON.parse(localStorage.getItem("user") || "null");
 
   const fetchShifts = async () => {
     try {
@@ -69,16 +70,16 @@ const ShiftManagement: React.FC = () => {
     setShowPreview(false);
     try {
       const response = await fetch(
-        `https://quanlyquananapi-production.up.railway.app/api/taoketca/${userId}`,
+        `https://quanlyquananapi-production.up.railway.app/api/taoketca/${user.u_id}`,
         { method: "POST" }
       );
       const data = await response.json();
 
-      if (data.kc_id) {
-        alert("✅ Tạo kết ca thành công!");
+      if (data) {
+        showSuccessToast(data.message);
         fetchShifts();
       } else {
-        alert(`❌ Lỗi: ${data.error}`);
+        showErrorToast(data.message);
       }
     } catch (error) {
       alert("🚨 Có lỗi xảy ra khi tạo kết ca!");
@@ -89,7 +90,7 @@ const ShiftManagement: React.FC = () => {
   const handleViewShiftDetails = async (shift: Shift) => {
     try {
       const response = await fetch(
-        `https://quanlyquananapi-production.up.railway.app/api/danhsachhoadon/${userId}`
+        `https://quanlyquananapi-production.up.railway.app/api/danhsachhoadon/${shift.id}`
       );
       const data = await response.json();
       if (data.result === 1) {

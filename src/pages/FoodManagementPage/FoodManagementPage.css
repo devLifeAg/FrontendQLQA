@@ -1,72 +1,83 @@
-/* FoodMenu.css */
-/* .food-menu-container {
-    padding: 40px;
-  } */
-  
-  .food-menu-search {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  
-  /* .food-menu-add-btn {
-    margin-bottom: 50px !important;
-  } */
-  
-  .food-item-card {
-    border-radius: 8px;
-    transition: transform 0.2s ease-in-out;
-    /* background-color: rgb(243, 243, 193) !important; */
-    background-color: #F0E68C !important;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5) !important;
-  }
-  
-  .food-item-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .food-item-img {
-    height: 140px;
-    object-fit: cover;
-  }
-  
-  .food-item-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-  }
+.container {
+  max-width: 1280px;  /* Giới hạn chiều rộng tối đa */
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 
-  /* HTML: <div class="loader"></div> */
+.food-menu-search {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.food-item-card {
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+  /* background-color: rgb(243, 243, 193) !important; */
+  background-color: #f0e68c !important;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.food-item-card:hover {
+  transform: scale(1.05);
+}
+
+.food-item-img {
+  height: 140px;
+  object-fit: cover;
+}
+
+.food-item-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
 .loader {
   width: 90px;
   height: 14px;
   box-shadow: 0 3px 0 #fff;
   position: relative;
-  clip-path: inset(-40px 0 -5px)
+  clip-path: inset(-40px 0 -5px);
 }
 .loader:before {
   content: "";
   position: absolute;
   inset: auto calc(50% - 17px) 0;
   height: 50px;
-  --g:no-repeat linear-gradient(#ccc 0 0);
-  background: var(--g),var(--g),var(--g),var(--g);
+  --g: no-repeat linear-gradient(#ccc 0 0);
+  background: var(--g), var(--g), var(--g), var(--g);
   background-size: 16px 14px;
-  animation:
-    l7-1 10s infinite linear,
-    l7-2 10s infinite linear;
+  animation: l7-1 10s infinite linear, l7-2 10s infinite linear;
 }
 @keyframes l7-1 {
   0%,
-  100%  {background-position: 0 -50px,100% -50px}
-  17.5% {background-position: 0 100%,100% -50px,0 -50px,100% -50px}
-  35%   {background-position: 0 100%,100% 100% ,0 -50px,100% -50px}
-  52.5% {background-position: 0 100%,100% 100% ,0 calc(100% - 16px),100% -50px}
+  100% {
+    background-position: 0 -50px, 100% -50px;
+  }
+  17.5% {
+    background-position: 0 100%, 100% -50px, 0 -50px, 100% -50px;
+  }
+  35% {
+    background-position: 0 100%, 100% 100%, 0 -50px, 100% -50px;
+  }
+  52.5% {
+    background-position: 0 100%, 100% 100%, 0 calc(100% - 16px), 100% -50px;
+  }
   70%,
-  98%  {background-position: 0 100%,100% 100% ,0 calc(100% - 16px),100% calc(100% - 16px)}
+  98% {
+    background-position: 0 100%, 100% 100%, 0 calc(100% - 16px),
+      100% calc(100% - 16px);
+  }
 }
 @keyframes l7-2 {
-  0%,70% {transform:translate(0)}
-  100%  {transform:translate(200%)}
+  0%,
+  70% {
+    transform: translate(0);
+  }
+  100% {
+    transform: translate(200%);
+  }
 }
-  

@@ -2,21 +2,8 @@ import { useEffect, useState } from "react";
 import { HeaderPage } from "../../components/HeaderPage/HeaderPage";
 import "./OrderPage.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  showSuccessToast,
-  showErrorToast,
-} from "../../components/ToastService/ToastService";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { showSuccessToast, showErrorToast, } from "../../components/ToastService/ToastService";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, FormControl, InputLabel, Select, MenuItem, } from "@mui/material";
 // Kiểu dữ liệu cho danh mục và món ăn
 type Category = {
   pl_id: number;
@@ -55,6 +42,7 @@ export const OrderPage = () => {
   const [openPaymentDialog, setOpenPaymentDialog] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("0"); // default
   const [hasOrderData, setHasOrderData] = useState(false);
+
   // const [newOrderNotSend, newOrderNotSend] = useState<OrderItem[]>([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -86,10 +74,10 @@ export const OrderPage = () => {
             }))
           );
 
-          // ... xử lý foodList
+          // xử lý foodList
           setCategorieList(categoryList);
           setFoodItem(foodList);
-          setFoodLoaded(true); // ✅ Chỉ gọi sau khi FoodItem sẵn sàng
+          setFoodLoaded(true); // Chỉ gọi sau khi FoodItem sẵn sàng
         }
       } catch (error) {
         console.error("Lỗi khi gọi API:", error);
@@ -101,7 +89,7 @@ export const OrderPage = () => {
 
   useEffect(() => {
     if (foodLoaded) {
-      fetchMonOrder(); // ✅ Bây giờ mới được gọi
+      fetchMonOrder();
     }
   }, [foodLoaded]);
 
@@ -178,13 +166,13 @@ export const OrderPage = () => {
     setNewOrderList(updatedNewOrderList);
   };
 
+  // giảm món ăn
   const handleDecreaseQuantity = (mon_id: number) => {
     const updatedOrderList = orderList.map((item) =>
       item.mon_id === mon_id
         ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
         : item
     );
-    // .filter((item) => item.quantity > 0);
     setOrderList(updatedOrderList);
 
     // Cập nhật newOrderList
@@ -237,7 +225,7 @@ export const OrderPage = () => {
       if (response.ok) {
         fetchMonOrder();
         showSuccessToast(result.message);
-        // setIsOrderSubmitted(true);
+        setNewOrderList([]);
       } else {
         showErrorToast(result.message);
       }
@@ -288,7 +276,7 @@ export const OrderPage = () => {
       <HeaderPage />
       <div className="container mx-auto mt-5">
         <div className="orderZone">
-          <h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
             Phiếu Order {tableName} - mã bàn: {b_id}
           </h2>
           <table>
@@ -328,8 +316,8 @@ export const OrderPage = () => {
                   <td>
                     {newOrderList.some(
                       (newItem) => newItem.mon_id === item.mon_id
-                    ) && (
-                      <button
+                    ) &&(
+                      <button className="!bg-red-500 text-white"
                         onClick={() => handleRemoveFromOrder(item.mon_id)}
                       >
                         Xóa
@@ -395,7 +383,7 @@ export const OrderPage = () => {
         </div>
 
         {/* Danh sách món ăn */}
-        <div className="foodList">
+        <div className="foodList p-16 mb-16 ">
           {filteredItems.length > 0 ? (
             filteredItems.map((item) => (
               <div
