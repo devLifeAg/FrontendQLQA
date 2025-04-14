@@ -19,7 +19,7 @@ import { DeletePage } from "../DeletePage/DeletePage.tsx"; // Đảm bảo rằn
 import { CreatePage } from "../CreatePage/CreatePage"; // Tương tự với CreatePage.tsx
 import { EditPage } from "../EditPage/EditPage.tsx"; // Và EditPage.tsx
 import { OffTheDishPage } from "../OffTheDishPage/OffTheDishPage.tsx";
-import { showSuccessToast, showErrorToast, } from "../../components/ToastService/ToastService";
+import { showErrorToast, } from "../../components/ToastService/ToastService";
 // import Revenue from "../Revenue/RevenuePage";
 
 type FoodItem = {

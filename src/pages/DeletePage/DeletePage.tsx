@@ -7,7 +7,10 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useState } from "react";
-import { showSuccessToast, showErrorToast, } from "../../components/ToastService/ToastService";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "../../components/ToastService/ToastService";
 
 type DeletePageProps = {
   openDelete: boolean;
@@ -52,7 +55,7 @@ export const DeletePage = ({
         return;
       }
 
-      const text = await response.text();
+      // const text = await response.text();
       // const result = text ? JSON.parse(text) : null;
       showSuccessToast("Xóa món ăn thành công!");
 
@@ -60,7 +63,7 @@ export const DeletePage = ({
       onDeleteSuccess(); // Hàm callback (nếu có) để cập nhật danh sách món ăn
       setOpenDelete(false);
     } catch (error) {
-      showErrorToast("Xóa món ăn thất bại!")
+      showErrorToast("Xóa món ăn thất bại!");
     } finally {
       setLoading(false);
     }
